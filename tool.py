@@ -1,3 +1,4 @@
+import os
 import ftplib
 import time
 
@@ -18,5 +19,11 @@ try:
     files = ftp.nlst()
     for file in files:
         print(f"[!] {file}")
+        local = os.path.join(os.getcwd(), file)
+        openfile = open(local, "wb")
+        def download(dt):
+            openfile.write(dt)
+        ftp.retrbinary(f"RETR {file}", download)
+        print(f"{file} Downloaded!")
 except Exception as error:
     print(f"[!] Error: {error}")
